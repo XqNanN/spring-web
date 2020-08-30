@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nan.mapper.UserMapper">
+
+
+    <!--定义sql片段-->
+    <sql id="query_user_where">
+        <if test="userCustom !=null">
+          <if test="userCustom.sex !=null and userCustom.sex !=''">
+             and user.sex=#{userCustom.sex}
+          </if>
+          <if test="userCustom.username!=null and userCustom.username!=''">
+             and user.username like '%${userCustom.username}%'
+          </if>
+
+
+        </if>
+        
+       <include refid="userArray"></include>
+
+    </sql>
+
+
+    <sql id="userArray">
+
+        <if test="ids!=null">
+            <foreach collection="ids" item="user_Id" open=" 1=1  and(" close=")" separator="or">
+                id = #{user_Id}
+            </foreach>
+        </if>
+    </sql>
+
+   <sql id="userArrayin">
+       <if test="ids!=null">
+           <foreach collection="ids" item="user_id" open="id in (" close=")" separator=",">
+               #{user_id}
+           </foreach>
+       </if>
+   </sql>
+
+
+
+    <select id="findUerByID" resultType="user">
+    select * from user where id = #{id}
+  </select>
+
+    <select id="findUserList" resultType="com.nan.domain.UserCustom"
+    parameterType="com.nan.pojo.QueryVo">
+    select  * from user where sex=#{userCustom.sex} and username like '%${userCustom.username}%'
+    </select>
+
+    <select id="findUserListCount" parameterType="com.nan.pojo.QueryVo" resultType="int">
+        select count(*) from user where sex=#{userCustom.sex} and username like '%${userCustom.username}%'
+    </select>
+
+    <select id="getUserListWhere" resultType="com.nan.domain.UserCustom"
+            parameterType="com.nan.pojo.QueryVo">
+        select * from user
+        <where>
+          <!--  <include refid="query_user_where"/>-->
+           <!-- <include refid="userArray"></include>-->
+           <include refid="userArrayin"></include>
+        </where>
+    </select>
+
+</mapper>

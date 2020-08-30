@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>测试thymeleaf语法</title>
+</head>
+<body>
+<h1>ok</h1>
+<!--th:text 会原样输出-->
+<div id="idtest" th:id="${hello}" class="classTest" th:class="${hello}" th:text="${hello}"></div>
+<div th:utext="${hello}"></div>
+
+<div>
+    <h2 th:each="user:${users}" th:text="${user}"></h2>
+</div>
+
+<div>
+    <h1>
+        <span th:each="myuser:${users}">[[${myuser}]]  </span>
+    </h1>
+</div>
+</body>
+</html>

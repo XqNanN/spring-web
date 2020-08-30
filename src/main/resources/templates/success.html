@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<body>
+<h1>this is my success html</h1>
+
+<div th:text="${hello}"></div>
+<hr/>
+<div th:untext="${hello}"></div>
+
+<div>
+   th:text ; th:id   th:class   可以用于替换html的属性  
+</div>
+
+<h4 th:text="${user}" th:each="user:${users}"></h4>
+<hr/>
+<span th:text="${user}" th:each="user:${users}"></span>
+
+
+
+</body>
+   
+</html>
+
